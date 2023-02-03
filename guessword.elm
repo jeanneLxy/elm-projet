@@ -56,6 +56,7 @@ type alias Meaning =
   
   
 --Init
+--here I directly make thousand word.txt into a list and put it in init because the link for this txt still cannot be loaded 
 
 init :()-> (Model,Cmd Msg)
 init _=
@@ -72,15 +73,13 @@ getRandomQuote myWord =
     }
 
 -- UPDATE
+
 type Msg
   = Answer String
   | Show
   | GotWord (Result Http.Error ( List (List Meaning)))
   | NewNumber Int
   | MoreGame
-
-
-  
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -144,7 +143,7 @@ viewInput : String -> String -> String -> (String -> msg) -> Html msg
 viewInput t p v toMsg =
   input [ type_ t, placeholder p, value v, onInput toMsg ] []
 
-
+--check if the answer input is correct or not
 viewValidation : Model -> Html msg
 viewValidation model =
   if model.answer == model.word then
@@ -161,7 +160,7 @@ viewTitle model =
    
  
    
-   
+--create checkbox  
 checkbox : msg -> String -> Html msg
 checkbox msg name =
     label
@@ -170,7 +169,7 @@ checkbox msg name =
         , text name
         ]
         
---Decoder
+--DECODER
 
 dictionDecoder : Decoder (List  (List Meaning))
 dictionDecoder =
@@ -202,9 +201,9 @@ changetext nb listword =
     Maybe.withDefault "" myWord
 
 
+--VIEW
 
-
---read Json and print on browser
+--read Json and print on browser (fonction recursive)
 
 readlist: Int ->List (List Meaning) -> Html Msg
 readlist i quote  = 
